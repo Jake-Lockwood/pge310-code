@@ -1,0 +1,22 @@
+os: linux
+language: python
+notifications: 
+  email: false
+env:
+  - ASSIGNMENT=assignment10
+install:
+  - wget https://repo.continuum.io/miniconda/Miniconda3-latest-Linux-x86_64.sh -O miniconda.sh;
+  - bash miniconda.sh -b -p $HOME/miniconda
+  - export PATH="$HOME/miniconda/bin:$PATH"
+  - hash -r
+  - conda config --set always_yes yes --set changeps1 no
+  - conda update -q conda
+  - conda env create -f environment.yml
+  - source $(conda info --root)/etc/profile.d/conda.sh
+  - conda activate $ASSIGNMENT
+  - "curl -H \"Authorization: token ${GH_TOKEN}\" -H 'Accept: application/vnd.github.v3.raw' -O --location \"https://api.github.com/repos/PGE310/${ASSIGNMENT}/contents/test.py\""
+  - "curl -H \"Authorization: token ${GH_TOKEN}\" -H 'Accept: application/vnd.github.v3.raw' -O --location \"https://api.github.com/repos/PGE310/${ASSIGNMENT}/contents/33105029270000.csv\""
+  - "curl -H \"Authorization: token ${GH_TOKEN}\" -H 'Accept: application/vnd.github.v3.raw' -O --location \"https://api.github.com/repos/PGE310/${ASSIGNMENT}/contents/images/33013014020000_gold.png\""
+  - "(cd images && curl -H \"Authorization: token ${GH_TOKEN}\" -H 'Accept: application/vnd.github.v3.raw' -O --location \"https://api.github.com/repos/PGE310/${ASSIGNMENT}/contents/images/33105029270000_gold.png\")"
+script:
+  - python test.py

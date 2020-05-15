@@ -1,0 +1,8 @@
+name: assignment5
+channels:
+  - defaults
+dependencies:
+  - python=3.6.5
+  - nbconvert=5.6.1
+  - ipython=7.11.1
+  - numpy=1.15.1
